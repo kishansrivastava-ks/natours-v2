@@ -1,0 +1,109 @@
+.popup {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  // background-color: rgba($color: #000000, $alpha: 0.8);
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: all 0.3s;
+
+  @supports (-webkit-backdrop-filter: blur(10px)) or
+    (backdrop-filter: blur(10px)) {
+    //graceful degradation (if supported then applied)
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba($color: #000000, $alpha: 0.3);
+  }
+
+  &__content {
+    @include absCenter;
+
+    width: 75%;
+    // height: 50rem;
+    background-color: $color-white;
+    box-shadow: 0 2rem 4rem rgba($color: #000000, $alpha: 0.2);
+    border-radius: 3px;
+    display: table; // parent of left and right
+    overflow: hidden;
+
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    transition: all 0.5s 0.2s; //.2s is the delay
+  }
+
+  &__left {
+    width: 33.333%;
+    display: table-cell;
+    // parent element content defined as table, this will now give the left and right components equal heights
+    // left side contains images and right side contains the content
+  }
+
+  &__right {
+    width: 66.6667%;
+    display: table-cell;
+    vertical-align: middle; //aligh the contents of the table cell in the middle
+    padding: 3rem 5rem;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+  }
+
+  &__text {
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
+
+    // giving the two column layout
+    -moz-column-count: 2; // two columns created
+    -moz-column-gap: 4rem; //1em by default
+    -moz-column-rule: 1px solid $color-grey-light-2; //gives a line in the middle of the two columns
+
+    column-count: 2; // two columns created
+    column-gap: 4rem; //1em by default
+    column-rule: 1px solid $color-grey-light-2; //gives a line in the middle of the two columns
+
+    // for hyphenation
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  //OPEN STATES
+  &:target {
+    // this is applied to the target when it is called, here the target is the popup and it is called by hitting the book now btn
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:target &__content {
+    // when the popup element becomes the target, we style the content:
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  &__close {
+    &:link,
+    &:visited {
+      color: $color-grey-dark;
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      font-size: 3rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}

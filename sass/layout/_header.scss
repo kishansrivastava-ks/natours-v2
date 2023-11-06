@@ -1,0 +1,60 @@
+.header {
+  height: 95vh; /*95% of viewport height*/
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8) /*this is not possible in normal css*/
+    ),
+    url(../img/hero-small.jpg);
+  /*first gradient will be there and then the image below it, start from left to right*/
+  /*rgba is used to give opacity to the linear gradient*/
+  background-size: cover; /*whatevr the */
+  background-position: top; /*resizing screen would crop fron bottom and top would be fixed*/
+
+  /*creating the wedge at the bottom*/
+  -webkit-clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 75vh,
+    0 100%
+  ); //for all browser compatability
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  /* we are clipping the header as a polygon and the four arguments are the location of the four corners of the polygon we want the image to clip as  */
+  position: relative;
+
+  @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    only screen and (min-width: 125em) {
+    // this is a reference for a high resolution display
+    // whenever the resolution is >=192dpi these all will apply
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8) /*this is not possible in normal css*/
+      ),
+      url(../img/hero.jpg);
+  }
+
+  @include respond(phone) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  &__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+    /* the top and left have to start to count 40px from a relative position which is its parent element and here its parent element is header so the position of header has to be relative */
+  }
+  &__logo {
+    height: 3.5rem; /*would would be scaled by the browser*/
+  }
+  &__text-box {
+    /* centering the box */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /*centering it*/
+    text-align: center;
+  }
+}
